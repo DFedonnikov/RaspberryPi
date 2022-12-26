@@ -1,9 +1,6 @@
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 
-inline fun runUntilExit(crossinline block: suspend (() -> Boolean) -> Unit) = runBlocking {
+inline fun runUntilExit(crossinline block: suspend CoroutineScope.(() -> Boolean) -> Unit) = runBlocking {
     var isRunning = true
     launch(Dispatchers.Default) {
         block { isRunning }
