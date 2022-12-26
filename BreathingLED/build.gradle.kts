@@ -1,8 +1,5 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     kotlin("jvm") version "1.7.10"
-    application
     id("io.ktor.plugin") version "2.2.1"
 }
 
@@ -14,17 +11,14 @@ repositories {
 }
 
 dependencies {
-    testImplementation(kotlin("test"))
+    implementation(kotlin("stdlib"))
+    implementation(project(":common"))
 }
 
-tasks.test {
-    useJUnit()
-}
-
-tasks.withType<KotlinCompile>() {
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions.jvmTarget = "11"
 }
 
 application {
-    mainClass.set("MainKt")
+    mainClass.set("BreathingLedKt")
 }
