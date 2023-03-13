@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version "1.7.10"
     application
-    id("io.ktor.plugin") version "2.2.1"
+    id("io.ktor.plugin") version "2.2.3"
 }
 
 group = "me.dmitryfedonnikov"
