@@ -8,10 +8,10 @@ import kotlinx.coroutines.delay
 private const val ADC_7830_ADDRESS = 0x4b
 
 fun main() {
-    colorfulSoftlight()
+    bedlamp()
 }
 
-private fun colorfulSoftlight() = runUntilExit {
+private fun bedlamp() = runUntilExit {
     pi4j(builder = {
         add(LinuxFsI2CProviderImpl())
     }) {
