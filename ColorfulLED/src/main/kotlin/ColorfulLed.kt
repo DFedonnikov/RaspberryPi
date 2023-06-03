@@ -10,7 +10,7 @@ fun main() {
     colorfulLed()
 }
 
-private fun colorfulLed() = runUntilExit { isRunning ->
+private fun colorfulLed() = runUntilExit { scope ->
     val pins = getPinMap()
     val redPin = pins.bcm(PinName.GPIO_17)
     val greenPin = pins.bcm(PinName.GPIO_18)
@@ -29,15 +29,15 @@ private fun colorfulLed() = runUntilExit { isRunning ->
             var currentRed = redPwm.dutyCycle
             var currentGreen = greenPwm.dutyCycle
             var currentBlue = bluePwm.dutyCycle
-            while (isRunning()) {
+            while (isRunning) {
                 val nextRed = Random.nextFloat() * 100
                 val nextGreen = Random.nextFloat() * 100
                 val nextBlue = Random.nextFloat() * 100
-                val red = redPwm.animateAsync(currentRed, nextRed)
+                val red = with(scope) { redPwm.animateAsync(currentRed, nextRed) }
                 red.await()
-                val green = greenPwm.animateAsync(currentGreen, nextGreen)
+                val green = with(scope) { greenPwm.animateAsync(currentGreen, nextGreen) }
                 green.await()
-                val blue = bluePwm.animateAsync(currentBlue, nextBlue)
+                val blue = with(scope) { bluePwm.animateAsync(currentBlue, nextBlue) }
                 blue.await()
                 currentRed = nextRed
                 currentGreen = nextGreen

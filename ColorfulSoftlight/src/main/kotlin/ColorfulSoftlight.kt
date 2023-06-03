@@ -12,7 +12,7 @@ fun main() {
     colorfulSoftlight()
 }
 
-private fun colorfulSoftlight() = runUntilExit { isRunning ->
+private fun colorfulSoftlight() = runUntilExit {
     console {
         pi4j(builder = {
             add(LinuxFsI2CProviderImpl())
@@ -41,7 +41,7 @@ private fun colorfulSoftlight() = runUntilExit { isRunning ->
                     println("Failed to read config from address: $ADC_7830_ADDRESS")
                     return@use
                 }
-                while (isRunning()) {
+                while (isRunning) {
                     val redValue = 255 - i2c.readRegister(0)
                     val greenValue = 255 - i2c.readRegister(64)
                     val blueValue = 255 - i2c.readRegister(31)

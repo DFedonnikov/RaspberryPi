@@ -1,14 +1,15 @@
+import com.pi4j.ktx.Konsole
+import com.pi4j.ktx.console
 import kotlinx.coroutines.*
 
-inline fun runUntilExit(crossinline block: suspend CoroutineScope.(() -> Boolean) -> Unit) = runBlocking {
-    var isRunning = true
-    launch(Dispatchers.Default) {
-        block { isRunning }
+inline fun runUntilExit(crossinline block: suspend Konsole.(CoroutineScope) -> Unit) = runBlocking {
+    withContext(Dispatchers.Default) {
+        console {
+            clearScreen()
+            promptForExit()
+            block(this@withContext)
+            waitForExit()
+        }
     }
-    var input = ""
-    while (input != "exit") {
-        input = readln()
-    }
-    isRunning = false
     delay(2000)
 }

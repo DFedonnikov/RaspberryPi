@@ -8,14 +8,14 @@ fun main() {
     breathingLed()
 }
 
-private fun breathingLed() = runUntilExit { isRunning ->
+private fun breathingLed() = runUntilExit {
     val pin = getPinMap().bcm(PinName.GPIO_18)
     console {
         pi4j {
             val pwm = pwm(pin) {
                 piGpioProvider()
             }
-            while (isRunning()) {
+            while (isRunning) {
                 (0 until 100).forEach {
                     pwm.on(it)
                     delay(20)

@@ -7,7 +7,7 @@ fun main() {
     buzzer()
 }
 
-fun buzzer() = runUntilExit { isRunning ->
+fun buzzer() = runUntilExit {
     val pins = getPinMap()
     val buzzer = pins.bcm(PinName.GPIO_17)
     val button = pins.bcm(PinName.GPIO_18)
@@ -16,7 +16,7 @@ fun buzzer() = runUntilExit { isRunning ->
             val buttonInput = digitalInput(button)
             val buzzerOutput = digitalOutput(buzzer)
             buttonInput.pull()
-            while(isRunning()) {
+            while(isRunning) {
                 if (buttonInput.isLow) {
                     buzzerOutput.high()
                 } else {

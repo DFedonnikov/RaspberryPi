@@ -17,7 +17,7 @@ fun alerter() {
     println("Enter sine multiplier: ")
     val sineMultiplier = readlnOrNull()?.toIntOrNull() ?: 500
     println("Duty cycle: $dutyCycle; sine multiplier: $sineMultiplier")
-    runUntilExit { isRunning ->
+    runUntilExit {
         val pins = getPinMap()
         val buzzer = pins.bcm(PinName.GPIO_17)
         val button = pins.bcm(PinName.GPIO_18)
@@ -26,7 +26,7 @@ fun alerter() {
                 val buttonInput = digitalInput(button)
                 val buzzerOutput: Pwm = pwm(buzzer)
                 buttonInput.pull()
-                while (isRunning()) {
+                while (isRunning) {
                     if (buttonInput.isLow) {
                         buzzerOutput.runAlert(dutyCycle, sineMultiplier)
                     } else {

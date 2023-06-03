@@ -1,4 +1,3 @@
-import com.pi4j.ktx.console
 import com.pi4j.ktx.io.i2c
 import com.pi4j.ktx.io.linuxFsI2CProvider
 import com.pi4j.plugin.linuxfs.provider.i2c.LinuxFsI2CProviderImpl
@@ -10,8 +9,7 @@ fun main() {
     adc()
 }
 
-fun adc() = runUntilExit { isRunning ->
-    console {
+fun adc() = runUntilExit {
         pi4j(builder = {
             add(LinuxFsI2CProviderImpl())
         }) {
@@ -26,7 +24,7 @@ fun adc() = runUntilExit { isRunning ->
                     println("Failed to read config from address: $ADC_7830_ADDRESS")
                     return@use
                 }
-                while (isRunning()) {
+                while (isRunning) {
                     val adcValue = i2c.readRegister(0)
                     val voltage = adcValue / 255.0f * 3.3
                     println("ADC value: $adcValue; voltage: $voltage")
@@ -34,5 +32,4 @@ fun adc() = runUntilExit { isRunning ->
                 }
             }
         }
-    }
 }

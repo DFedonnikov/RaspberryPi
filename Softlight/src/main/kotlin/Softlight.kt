@@ -12,7 +12,7 @@ fun main() {
     softlight()
 }
 
-private fun softlight() = runUntilExit { isRunning ->
+private fun softlight() = runUntilExit {
     console {
         pi4j(builder = {
             add(LinuxFsI2CProviderImpl())
@@ -33,7 +33,7 @@ private fun softlight() = runUntilExit { isRunning ->
                     println("Failed to read config from address: $ADC_7830_ADDRESS")
                     return@use
                 }
-                while (isRunning()) {
+                while (isRunning) {
                     val adcValue = i2c.readRegister(0)
                     redLedPwm.on(adcValue * 100 / 255)
                     val voltage = adcValue / 255.0f * 3.3

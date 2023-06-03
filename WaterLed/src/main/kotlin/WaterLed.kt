@@ -8,7 +8,7 @@ fun main() {
     waterLed()
 }
 
-private fun waterLed() = runUntilExit { isRunning ->
+private fun waterLed() = runUntilExit {
     val pinMap = getPinMap()
     val pins = with(pinMap) {
         arrayOf(
@@ -28,7 +28,7 @@ private fun waterLed() = runUntilExit { isRunning ->
                     piGpioProvider()
                 }
             }
-            while (isRunning()) {
+            while (isRunning) {
                 pinOutputs.forEach {
                     it.low()
                     delay(100)
