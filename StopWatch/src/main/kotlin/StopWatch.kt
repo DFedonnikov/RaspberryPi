@@ -4,7 +4,6 @@ import com.pi4j.ktx.io.digital.digitalOutput
 import com.pi4j.ktx.pi4j
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlin.time.Duration.Companion.microseconds
 
 private val DISPLAY_DELAY = 1L
 private val nums = listOf(0xc0, 0xf9, 0xa4, 0xb0, 0x99, 0x92, 0x82, 0xf8, 0x80, 0x90)
@@ -54,22 +53,19 @@ fun List<DigitalOutput>.selectDigit(digit: Int) {
     if (digit.and(0x01) == 0x01) this[3].low() else this[3].high()
 }
 
-suspend fun shiftOut(value: Int, dataOutput: DigitalOutput, clockOutput: DigitalOutput, isLeftShift: Boolean) {
+fun shiftOut(value: Int, dataOutput: DigitalOutput, clockOutput: DigitalOutput, isLeftShift: Boolean) {
     repeat(8) {
         clockOutput.low()
         if (isLeftShift) {
             if (1.and(value.shr(it)) == 1) dataOutput.high() else dataOutput.low()
-//            delay(1.microseconds)
         } else {
             if (128.and(value.shl(it)) == 128) dataOutput.high() else dataOutput.low()
-//            delay(1.microseconds)
         }
         clockOutput.high()
-//        delay(1.microseconds)
     }
 }
 
-suspend fun outData(data: Int, dataOutput: DigitalOutput, latchOutput: DigitalOutput, clockOutput: DigitalOutput) {
+fun outData(data: Int, dataOutput: DigitalOutput, latchOutput: DigitalOutput, clockOutput: DigitalOutput) {
     latchOutput.low()
     shiftOut(data, dataOutput, clockOutput, false)
     latchOutput.high()
