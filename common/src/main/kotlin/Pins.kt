@@ -31,7 +31,7 @@ fun getPinMap(): Map<PinName, Pin> = mapOf(
 
 fun Map<PinName, Pin>.bcm(name: PinName) = this[name]!!.bcm
 
-class Pin internal constructor(val bcm: Int, wPi: Int, physical: Int)
+class Pin internal constructor(val bcm: Int, val wPi: Int, val physical: Int)
 
 enum class PinName {
     SDA_0,
